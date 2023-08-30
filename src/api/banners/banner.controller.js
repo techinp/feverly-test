@@ -4,7 +4,7 @@ export async function create(req, res) {
   const { url, desc, shops } = req.body;
 
   const sql =
-    'INSERT INTO banners(url, description, shops_shopId) VALUES(?, ?, ?)';
+    'INSERT INTO banners(url, description, shopId) VALUES(?, ?, ?)';
   const values = [url, desc, shops];
 
   dbInsert(res, sql, values, 'Banner Created');
@@ -32,7 +32,7 @@ export async function update(req, res) {
   const { url, description, bannerId } = req.body;
 
   db.query(
-    'UPDATE banners SET url = ?, description = ? WHERE bannerId = ?',
+    'UPDATE banners SET url = ?, description = ? WHERE id = ?',
     [url, description, bannerId],
     (err, _results, _fields) => {
       if (err) {
@@ -57,7 +57,7 @@ export async function remove(req, res) {
   const { bannerId } = req.body;
 
   db.query(
-    'DELETE FROM banners WHERE bannerId = ?',
+    'DELETE FROM banners WHERE id = ?',
     [bannerId],
     (err, results, fields) => {
       if (err) {

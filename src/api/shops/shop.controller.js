@@ -46,13 +46,13 @@ export async function update(req, res) {
   console.log('req.body :', req.body);
   const { name, lat, lng, shopId } = req.body;
   db.query(
-    'SELECT * FROM shops WHERE shopId = ?',
+    'SELECT * FROM shops WHERE id = ?',
     [shopId],
     (err, results, fields) => {
       if (results.length) {
         const shop = results[0];
         db.query(
-          'UPDATE shops SET name = ?, coordinates = POINT(?, ?) WHERE shopId = ?',
+          'UPDATE shops SET name = ?, coordinates = POINT(?, ?) WHERE id = ?',
           [name, lat, lng, shopId],
           (_err, _results, _fields) => {
             if (_err) {
@@ -89,7 +89,7 @@ export async function remove(req, res) {
   const { shopId } = req.body;
 
   db.query(
-    'DELETE FROM shops WHERE shopId = ?',
+    'DELETE FROM shops WHERE id = ?',
     [shopId],
     (err, results, fields) => {
       if (err) {

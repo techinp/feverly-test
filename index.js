@@ -19,8 +19,6 @@ db.connect((err) => {
     } else if (err.code === 'ECONNREFUSED') {
       console.error('Database connection was refused.');
     } else {
-      // Rethrow non-MySQL errors
-      console.log('ELSE');
       throw err;
     }
   } else {

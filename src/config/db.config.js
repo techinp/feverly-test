@@ -1,10 +1,10 @@
-import { createConnection } from 'mysql';
+import { createConnection } from 'mysql2';
 
 const connection = createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'feyverly-test',
+  database: 'database_development',
 });
 
 export const dbInsert = (res, sql, values, message) => {

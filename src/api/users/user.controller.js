@@ -44,16 +44,17 @@ export async function signIn(req, res) {
           if (service.comparePassword(password, user.password)) {
             const token = jwt.sign(
               {
-                userId: user.userId,
+                userId: user.id,
                 username: user.username,
               },
               appConfig.jwtSecret,
               { expiresIn: appConfig.jwtExpiredTime }
             );
             db.query(
-              'UPDATE users SET token = ? WHERE userId = ?',
-              [token, user.userId],
+              'UPDATE users SET token = ? WHERE id = ?',
+              [token, user.id],
               (_err, _results, _fields) => {
+                console.log('_err :', _err);
                 if (_err) {
                   return res.status(500).json({
                     message: err?.code || 'Somethings went wrong',
@@ -63,7 +64,7 @@ export async function signIn(req, res) {
                 } else {
                   const response = {
                     token,
-                    userId: user.userId,
+                    userId: user.id,
                     username: user.username,
                   };
                   return res.status(200).json({
@@ -95,7 +96,7 @@ export async function signIn(req, res) {
 export async function signOut(req, res) {
   try {
     db.query(
-      'UPDATE users SET token = null WHERE userId = ?',
+      'UPDATE users SET token = null WHERE id = ?',
       [req.payload.userId],
       (_err, _results, _fields) => {
         if (_err) {
